@@ -8,9 +8,9 @@ const middleware = require("../utils/middleware");
 // @access  private
 router.post(
   "/new",
-  middleware.fileUpload.single("image"),
-  productValidator,
-  runValidation,
+  middleware.fileUpload.single("images"),
+//   productValidator,
+//   runValidation,
   productController.createNewProduct
 );
 // @route   GET  /api/products

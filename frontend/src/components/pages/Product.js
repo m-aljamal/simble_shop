@@ -13,7 +13,6 @@ const Product = ({ match: { params } }) => {
 
   const { loading, product } = state;
 
-  console.log(product);
 
   return (
     <ProductStyle>
@@ -25,7 +24,10 @@ const Product = ({ match: { params } }) => {
           <div>Home - name</div>
           <div className="product_container">
             <div className="image">
-              <img src={product.images[0]} alt={product.name} />
+              <img
+                src={`${process.env.REACT_APP_BACKEND_URL}/${product.images[0]}`}
+                alt={product.name}
+              />
             </div>
             <div className="product_info">
               <p>{product.name}</p>

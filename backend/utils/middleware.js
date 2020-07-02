@@ -1,6 +1,6 @@
 const logger = require("./logger");
 const jwt = require("jsonwebtoken");
-import { v4 as uuidv4 } from "uuid";
+const { v4: uuidv4 } = require("uuid");
 const multer = require("multer"); // this used for image upload
 const MIME_TYPE_MAP = {
   "image/png": "png",

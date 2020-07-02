@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 const ProductLanding = ({ product: { images, name, price, id } }) => {
+  
   return (
     <ProductStyle>
       <Link to={`/product/${id}`}>

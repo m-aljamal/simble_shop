@@ -1,4 +1,6 @@
 const express = require("express");
+const serveIndex = require("serve-index");
+
 app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -19,6 +21,12 @@ mongoose
 app.use(cors());
 app.use(express.json());
 app.use(middleware.requestLogger);
+// app.use(express.static('uploads/images'))
+app.use(
+  "/uploads/images",
+  express.static("uploads/images"),
+  serveIndex("uploads/images", { icons: true })
+);
 
 // app routes
 app.use("/api/users", require("./routes/users_routes"));

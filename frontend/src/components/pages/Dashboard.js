@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, Select, InputNumber, Button, Upload } from "antd";
-import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
-import {useDispatch} from 'react-redux'
-import {createProduct} from '../../actions/products_actions'
-import {useHistory} from 'react-router-dom'
+import { InboxOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { createProduct } from "../../actions/products_actions";
+import { useHistory } from "react-router-dom";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -15,25 +15,33 @@ const formItemLayout = {
   },
 };
 
-const normFile = (e) => {
-  console.log("Upload event:", e);
-
-  if (Array.isArray(e)) {
-    return e;
-  }
-
-  return e && e.fileList;
-};
-
-
 const Dashboard = () => {
-    const history = useHistory()
-    const dispatch = useDispatch()
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const [formData, setFormData] = useState({});
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const normFile = (e) => {
+    console.log("Upload event:", e);
+
+    if (Array.isArray(e)) {
+      return e;
+    }
+
+    return e && e.fileList;
+  };
+  
+  if(formData.name){
+    console.log('ffff',formData);
+dispatch(createProduct(formData));
+    history.push("/");
     
-    dispatch(createProduct(values))
-    history.push('/')
+  }
+  const onFinish = (values) => {
+    const { colors, name, price, quantity, sizes, type } = values;
+    setFormData({ ...formData, colors, name, price, quantity, sizes, type });
+   
+
+    
   };
   return (
     <div>
@@ -55,7 +63,6 @@ const Dashboard = () => {
           >
             <Input />
           </Form.Item>
-
           <Form.Item
             name="type"
             label="Select product type"
@@ -78,7 +85,6 @@ const Dashboard = () => {
               <Option value="shorts">Shorts</Option>
             </Select>
           </Form.Item>
-
           <Form.Item
             name="colors"
             label="Select[multiple-colors]"
@@ -97,7 +103,6 @@ const Dashboard = () => {
               <Option value="blak">Black</Option>
             </Select>
           </Form.Item>
-
           <Form.Item
             name="sizes"
             label="Select[multiple-sizes]"
@@ -121,7 +126,6 @@ const Dashboard = () => {
               <Option value="large">large</Option>
             </Select>
           </Form.Item>
-
           <Form.Item label="Quantity">
             <Form.Item name="quantity" noStyle>
               <InputNumber min={1} max={5000} />
@@ -134,29 +138,18 @@ const Dashboard = () => {
             </Form.Item>
             <span className="ant-form-text"> Price</span>
           </Form.Item>
-
-          <Form.Item
-            name="upload"
-            label="Upload"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-            extra="longgggggggggggggggggggggggggggggggggg"
-          >
-            <Upload name="logo" action="/upload.do" listType="picture">
-              <Button>
-                <UploadOutlined /> Click to upload
-              </Button>
-            </Upload>
-          </Form.Item>
-
-          <Form.Item label="Dragger">
+          {/* <Form.Item label="Dragger">
             <Form.Item
-              name="dragger"
+              name="images"
               valuePropName="fileList"
               getValueFromEvent={normFile}
               noStyle
             >
-              <Upload.Dragger name="files" action="/upload.do">
+              
+              <Upload.Dragger
+                name="images"
+                action={`${process.env.REACT_APP_BACKEND_URL}/api/products/new`}
+                >
                 <p className="ant-upload-drag-icon">
                   <InboxOutlined />
                 </p>
@@ -167,19 +160,28 @@ const Dashboard = () => {
                   Support for a single or bulk upload.
                 </p>
               </Upload.Dragger>
+             
             </Form.Item>
-          </Form.Item>
-
+          </Form.Item> */}
           <Form.Item
             wrapperCol={{
               span: 12,
               offset: 6,
             }}
           >
+            <input
+              type="file"
+              required
+              name="images"
+              onChange={(e) =>
+                setFormData({ ...formData, images: e.target.value })
+              }
+            />
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>
+          ,
         </Form>
       </div>
     </div>
