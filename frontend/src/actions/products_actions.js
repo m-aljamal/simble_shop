@@ -40,7 +40,7 @@ console.log('data before save',data);
     formData.append("quantity", data.quantity);
     formData.append("sizes", data.sizes);
     formData.append("type", data.type);
-    formData.append("images", data.images);
+    formData.append("images", data.images[0].response.images);
 
     const res = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/api/products/new`,
@@ -53,6 +53,6 @@ console.log('data before save',data);
       payload: res.data,
     });
   } catch (error) {
-    console.error(error);
+    console.error('error',error);
   }
 };

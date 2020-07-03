@@ -1,6 +1,15 @@
 import React, { useState } from "react";
-import { Form, Input, Select, InputNumber, Button, Upload } from "antd";
+import {
+  Form,
+  Input,
+  Select,
+  InputNumber,
+  Button,
+  Upload,
+  message,
+} from "antd";
 import { InboxOutlined } from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { createProduct } from "../../actions/products_actions";
 import { useHistory } from "react-router-dom";
@@ -16,32 +25,55 @@ const formItemLayout = {
 };
 
 const Dashboard = () => {
-  const [formData, setFormData] = useState({});
+  const [fileList, setfileList] = useState({});
+  const [uploading, setUploading] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const normFile = (e) => {
-    console.log("Upload event:", e);
+  // const normFile = (e) => {
+  //   console.log("Upload event:", e);
 
-    if (Array.isArray(e)) {
-      return e;
-    }
+  //   if (Array.isArray(e)) {
+  //     return e;
+  //   }
 
-    return e && e.fileList;
+  //   return e && e.fileList;
+  // };
+  // ! upload
+  const handleUpload = () => {
+    const formData = new FormData();
+    fileList.forEach((file) => {
+      formData.append("files[]", file);
+    });
+
+    setUploading(true);
   };
-  
-  if(formData.name){
-    console.log('ffff',formData);
-dispatch(createProduct(formData));
-    history.push("/");
-    
-  }
-  const onFinish = (values) => {
-    const { colors, name, price, quantity, sizes, type } = values;
-    setFormData({ ...formData, colors, name, price, quantity, sizes, type });
-   
 
-    
+  // const { uploading, fileList } = this.state;
+  const props = {
+    onRemove: (file) => {
+      setfileList((state) => {
+        const index = state.fileList.indexOf(file);
+        const newFileList = state.fileList.slice();
+        newFileList.splice(index, 1);
+        return {
+          fileList: newFileList,
+        };
+      });
+    },
+    beforeUpload: (file) => {
+      setfileList((state) => ({
+        fileList: [...state.fileList, file],
+      }));
+      return false;
+    },
+    fileList,
+  };
+
+  // !
+  const onFinish = (values) => {
+    dispatch(createProduct(values));
+    history.push("/");
   };
   return (
     <div>
@@ -145,11 +177,10 @@ dispatch(createProduct(formData));
               getValueFromEvent={normFile}
               noStyle
             >
-              
               <Upload.Dragger
                 name="images"
                 action={`${process.env.REACT_APP_BACKEND_URL}/api/products/new`}
-                >
+              >
                 <p className="ant-upload-drag-icon">
                   <InboxOutlined />
                 </p>
@@ -160,7 +191,6 @@ dispatch(createProduct(formData));
                   Support for a single or bulk upload.
                 </p>
               </Upload.Dragger>
-             
             </Form.Item>
           </Form.Item> */}
           <Form.Item
@@ -169,15 +199,13 @@ dispatch(createProduct(formData));
               offset: 6,
             }}
           >
-            <input
-              type="file"
-              required
-              name="images"
-              onChange={(e) =>
-                setFormData({ ...formData, images: e.target.value })
-              }
-            />
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              onClick={handleUpload}
+              disabled={fileList.length === 0}
+              loading={uploading}
+            >
               Submit
             </Button>
           </Form.Item>
