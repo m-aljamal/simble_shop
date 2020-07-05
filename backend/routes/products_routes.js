@@ -8,9 +8,14 @@ const middleware = require("../utils/middleware");
 // @access  private
 router.post(
   "/new",
-  middleware.fileUpload.single("images"),
-//   productValidator,
-//   runValidation,
+
+  middleware.fileUpload.fields([
+    { name: "images", maxCount: 200 },
+    { name: "image", maxCount: 300 },
+  ]),
+  // middleware.fileUpload.array("images"),
+  //   productValidator,
+  //   runValidation,
   productController.createNewProduct
 );
 // @route   GET  /api/products

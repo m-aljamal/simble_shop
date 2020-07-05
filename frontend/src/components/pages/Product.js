@@ -13,7 +13,6 @@ const Product = ({ match: { params } }) => {
 
   const { loading, product } = state;
 
-
   return (
     <ProductStyle>
       <PageLinks />
@@ -25,7 +24,7 @@ const Product = ({ match: { params } }) => {
           <div className="product_container">
             <div className="image">
               <img
-                src={`${process.env.REACT_APP_BACKEND_URL}/${product.images[0]}`}
+                src={`${process.env.REACT_APP_BACKEND_URL}/${product.image}`}
                 alt={product.name}
               />
             </div>
@@ -36,8 +35,12 @@ const Product = ({ match: { params } }) => {
           </div>
           <div className="images_container">
             <div className="images">
-              <img src={product.images[1]} alt={product.name} />
-              <img src={product.images[2]} alt={product.name} />
+              {product.images.map((image) => (
+                <img
+                  src={`${process.env.REACT_APP_BACKEND_URL}/${image.path}`}
+                  alt={product.name}
+                />
+              ))}
             </div>
           </div>
         </div>

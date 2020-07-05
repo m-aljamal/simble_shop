@@ -1,217 +1,365 @@
+// import React, { useState } from "react";
+// import { useDispatch } from "react-redux";
+// import { createProduct } from "../../actions/products_actions";
+// import {
+//   Upload,
+//   Select,
+//   InputNumber,
+//   Button,
+//   message,
+//   Form,
+//   Input,
+// } from "antd";
+// import { UploadOutlined } from "@ant-design/icons";
+// const { Option } = Select;
+// const Dragger = Upload.Dragger;
+
+// const formLayout = {
+//   labelCol: {
+//     span: 6,
+//   },
+//   wrapperCol: {
+//     span: 14,
+//   },
+// };
+// const Dashboard = () => {
+//   const [formData, setFormData] = useState({
+//     colors: "",
+//     name: "",
+//     price: 0,
+//     quantity: 0,
+//     type: "",
+//     images: [],
+//     sizes: "",
+//     image:'',
+//   });
+
+//   const dispatch = useDispatch();
+
+//   const handleSubmit = () => {
+//     dispatch(createProduct(formData));
+//     message.success(`Product is added  successfully.`);
+//     setFormData({
+//       colors: "",
+//       name: "",
+//       price: 0,
+//       quantity: 0,
+//       type: "",
+//       images: [],
+//       sizes: "",
+//       image: "",
+//     });
+//   };
+
+//   const propsdrager = {
+//     name: "images",
+//     multiple: true,
+//     showUploadList: false,
+
+//     onChange(info) {
+//       const status = info.file.status;
+//       if (status !== "uploading") {
+//         console.log('multiple', info);
+
+//         setFormData({ ...formData, images: info });
+//       }
+//       if (status === "done") {
+//         console.log("done", info.file);
+
+//         message.success(`${info.file.name} file uploaded successfully.`);
+//       } else if (status === "error") {
+//         message.error(`${info.file.name} file upload failed.`);
+//       }
+//     },
+//     beforeUpload: (file) => {
+//       setFormData({ ...formData, images: file });
+
+//       return false;
+//     },
+//   };
+//   const oneImage = {
+//     name: "image",
+//     multiple: false,
+//     showUploadList: false,
+
+//     onChange(info) {
+//       const status = info.file.status;
+//       if (status !== "uploading") {
+//         console.log(info.file);
+
+//         setFormData({ ...formData, image: info.file });
+//       }
+//       if (status === "done") {
+//         console.log("done", info.file);
+
+//         message.success(`${info.file.name} file uploaded successfully.`);
+//       } else if (status === "error") {
+//         message.error(`${info.file.name} file upload failed.`);
+//       }
+//     },
+//     beforeUpload: (file) => {
+//       setFormData({ ...formData, image: file });
+
+//       return false;
+//     },
+//   };
+
+//   return (
+//     <div>
+//       <Form onFinish={handleSubmit} {...formLayout}>
+//         <Form.Item
+//           name="name"
+//           label="Product name"
+//           rules={[{ required: true }]}
+//           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+//         >
+//           <Input name="name" />
+//         </Form.Item>
+
+//         <Form.Item label="Quantity">
+//           <Form.Item noStyle>
+//             <InputNumber
+//               name="quantity"
+//               onChange={(e) => setFormData({ ...formData, quantity: e })}
+//             />
+//           </Form.Item>
+//         </Form.Item>
+//         <Form.Item label="Price">
+//           <Form.Item name="price" noStyle>
+//             <InputNumber
+//               onChange={(e) => setFormData({ ...formData, price: e })}
+//             />
+//           </Form.Item>
+//         </Form.Item>
+
+//         <Form.Item
+//           name="type"
+//           label="Select product type"
+//           hasFeedback
+//           rules={[
+//             {
+//               required: true,
+//               message: "Please select product type!",
+//             },
+//           ]}
+//         >
+//           <Select
+//             onChange={(e) => setFormData({ ...formData, type: e })}
+//             name="type"
+//             placeholder="Please select type"
+//           >
+//             <Option value="accessories">Accessories</Option>
+//             <Option value="denim">Denim</Option>
+//             <Option value="footwear">Footwear</Option>
+//             <Option value="jeans">Jeans</Option>
+//             <Option value="outerwear">Outerwear</Option>
+//             <Option value="pants">Pants</Option>
+//             <Option value="shirts">Shirts</Option>
+//             <Option value="shorts">Shorts</Option>
+//           </Select>
+//         </Form.Item>
+//         <Form.Item
+//           name="colors"
+//           label="Select[multiple-colors]"
+//           rules={[
+//             {
+//               required: true,
+//               message: "Please select product colors!",
+//               type: "array",
+//             },
+//           ]}
+//         >
+//           <Select
+//             onChange={(e) => setFormData({ ...formData, colors: e })}
+//             mode="multiple"
+//             placeholder="Please select product colors"
+//           >
+//             <Option value="bleach">Bleach</Option>
+//             <Option value="green">Green</Option>
+//             <Option value="blue">Blue</Option>
+//             <Option value="blak">Black</Option>
+//           </Select>
+//         </Form.Item>
+//         <Form.Item
+//           name="sizes"
+//           label="Select[multiple-sizes]"
+//           rules={[
+//             {
+//               required: true,
+//               message: "Please select product sizes!",
+//               type: "array",
+//             },
+//           ]}
+//         >
+//           <Select
+//             onChange={(e) => setFormData({ ...formData, sizes: e })}
+//             mode="multiple"
+//             placeholder="Please select product sizes"
+//           >
+//             <Option value="28">28</Option>
+//             <Option value="30">30</Option>
+//             <Option value="32">32</Option>
+//             <Option value="34">34</Option>
+//             <Option value="36">36</Option>
+//             <Option value="38">38</Option>
+//             <Option value="small">small</Option>
+//             <Option value="midum">midum</Option>
+//             <Option value="large">large</Option>
+//           </Select>
+//         </Form.Item>
+//         <Form.Item label="Dragger">
+//           <Dragger {...propsdrager}>
+//             <p className="ant-upload-drag-icon">
+//               <UploadOutlined />
+//             </p>
+//             <p className="ant-upload-text">
+//               Click or drag file to this area to upload
+//             </p>
+//             <p className="ant-upload-hint">
+//               Support for a single or bulk upload. Strictly prohibit from
+//               uploading company data or other band files
+//             </p>
+//           </Dragger>
+//         </Form.Item>
+//         <Form.Item label="Dragger">
+//           <Dragger {...oneImage}>
+//             <p className="ant-upload-drag-icon">
+//               <UploadOutlined />
+//             </p>
+//             <p className="ant-upload-text">
+//               Click or drag file to this area to upload
+//             </p>
+//             <p className="ant-upload-hint">
+//               Support for a single or bulk upload. Strictly prohibit from
+//               uploading company data or other band files
+//             </p>
+//           </Dragger>
+//         </Form.Item>
+//         <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+//           <Button type="primary" htmlType="submit">
+//             Submit
+//           </Button>
+//         </Form.Item>
+//       </Form>
+//     </div>
+//   );
+// };
+
+// export default Dashboard;
+
+// ! working version
 import React, { useState } from "react";
-import {
-  Form,
-  Input,
-  Select,
-  InputNumber,
-  Button,
-  Upload,
-  message,
-} from "antd";
-import { InboxOutlined } from "@ant-design/icons";
+
+import { Upload, Button, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { createProduct } from "../../actions/products_actions";
-import { useHistory } from "react-router-dom";
-
-const { Option } = Select;
-const formItemLayout = {
-  labelCol: {
-    span: 6,
-  },
-  wrapperCol: {
-    span: 14,
-  },
-};
-
+const Dragger = Upload.Dragger;
 const Dashboard = () => {
-  const [fileList, setfileList] = useState({});
-  const [uploading, setUploading] = useState(false);
-  const history = useHistory();
+  const [formData, setFormData] = useState({
+    colors: "",
+    name: "",
+    price: 0,
+    quantity: 0,
+    type: "",
+    images: [],
+    sizes: "",
+    image: "",
+  });
+
   const dispatch = useDispatch();
+  const {
+    colors,
+    name,
+    price,
+    quantity,
+    type,
+    sizes,
+    images,
+    image,
+  } = formData;
 
-  // const normFile = (e) => {
-  //   console.log("Upload event:", e);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  //   if (Array.isArray(e)) {
-  //     return e;
-  //   }
-
-  //   return e && e.fileList;
-  // };
-  // ! upload
-  const handleUpload = () => {
-    const formData = new FormData();
-    fileList.forEach((file) => {
-      formData.append("files[]", file);
-    });
-
-    setUploading(true);
+    console.log(formData);
+    dispatch(createProduct(formData));
+  };
+  const handleChangeImage = (e) => {
+    console.log(e.target.files);
+    setFormData({ ...formData, images: e.target.files });
+  };
+  const handleChangeOneImage = (e) => {
+    console.log(e.target.files[0]);
+    setFormData({ ...formData, image: e.target.files[0] });
   };
 
-  // const { uploading, fileList } = this.state;
-  const props = {
-    onRemove: (file) => {
-      setfileList((state) => {
-        const index = state.fileList.indexOf(file);
-        const newFileList = state.fileList.slice();
-        newFileList.splice(index, 1);
-        return {
-          fileList: newFileList,
-        };
-      });
-    },
-    beforeUpload: (file) => {
-      setfileList((state) => ({
-        fileList: [...state.fileList, file],
-      }));
-      return false;
-    },
-    fileList,
-  };
-
-  // !
-  const onFinish = (values) => {
-    dispatch(createProduct(values));
-    history.push("/");
-  };
   return (
     <div>
-      <div className="newProduct">
-        <Form
-          name="validate_other"
-          {...formItemLayout}
-          onFinish={onFinish}
-          initialValues={{
-            "input-number": 3,
-            "checkbox-group": ["A", "B"],
-            rate: 3.5,
-          }}
-        >
-          <Form.Item
-            name="name"
-            label="Product name"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="type"
-            label="Select product type"
-            hasFeedback
-            rules={[
-              {
-                required: true,
-                message: "Please select product type!",
-              },
-            ]}
-          >
-            <Select placeholder="Please select type">
-              <Option value="accessories">Accessories</Option>
-              <Option value="denim">Denim</Option>
-              <Option value="footwear">Footwear</Option>
-              <Option value="jeans">Jeans</Option>
-              <Option value="outerwear">Outerwear</Option>
-              <Option value="pants">Pants</Option>
-              <Option value="shirts">Shirts</Option>
-              <Option value="shorts">Shorts</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
+      <form onSubmit={handleSubmit}>
+        <div>
+          Name:
+          <input name="name" type="text" value={name} onChange={handleChange} />
+        </div>
+        <div>
+          Price:
+          <input
+            name="price"
+            type="number"
+            value={price}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          Quantity:{" "}
+          <input
+            name="quantity"
+            type="number"
+            value={quantity}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          Type:
+          <input name="type" type="text" value={type} onChange={handleChange} />
+        </div>
+        <div>
+          Colors:
+          <input
             name="colors"
-            label="Select[multiple-colors]"
-            rules={[
-              {
-                required: true,
-                message: "Please select product colors!",
-                type: "array",
-              },
-            ]}
-          >
-            <Select mode="multiple" placeholder="Please select product colors">
-              <Option value="bleach">Bleach</Option>
-              <Option value="green">Green</Option>
-              <Option value="blue">Blue</Option>
-              <Option value="blak">Black</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
+            type="text"
+            value={colors}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          Sizes:
+          <input
             name="sizes"
-            label="Select[multiple-sizes]"
-            rules={[
-              {
-                required: true,
-                message: "Please select product sizes!",
-                type: "array",
-              },
-            ]}
-          >
-            <Select mode="multiple" placeholder="Please select product sizes">
-              <Option value="28">28</Option>
-              <Option value="30">30</Option>
-              <Option value="32">32</Option>
-              <Option value="34">34</Option>
-              <Option value="36">36</Option>
-              <Option value="38">38</Option>
-              <Option value="small">small</Option>
-              <Option value="midum">midum</Option>
-              <Option value="large">large</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="Quantity">
-            <Form.Item name="quantity" noStyle>
-              <InputNumber min={1} max={5000} />
-            </Form.Item>
-            <span className="ant-form-text"> Price</span>
-          </Form.Item>
-          <Form.Item label="Price">
-            <Form.Item name="price" noStyle>
-              <InputNumber min={1} max={5000} />
-            </Form.Item>
-            <span className="ant-form-text"> Price</span>
-          </Form.Item>
-          {/* <Form.Item label="Dragger">
-            <Form.Item
-              name="images"
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-              noStyle
-            >
-              <Upload.Dragger
-                name="images"
-                action={`${process.env.REACT_APP_BACKEND_URL}/api/products/new`}
-              >
-                <p className="ant-upload-drag-icon">
-                  <InboxOutlined />
-                </p>
-                <p className="ant-upload-text">
-                  Click or drag file to this area to upload
-                </p>
-                <p className="ant-upload-hint">
-                  Support for a single or bulk upload.
-                </p>
-              </Upload.Dragger>
-            </Form.Item>
-          </Form.Item> */}
-          <Form.Item
-            wrapperCol={{
-              span: 12,
-              offset: 6,
-            }}
-          >
-            <Button
-              type="primary"
-              htmlType="submit"
-              onClick={handleUpload}
-              disabled={fileList.length === 0}
-              loading={uploading}
-            >
-              Submit
-            </Button>
-          </Form.Item>
-          ,
-        </Form>
-      </div>
+            type="text"
+            value={sizes}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          images
+          <input
+            type="file"
+            name="images"
+            onChange={handleChangeImage}
+            multiple
+          />
+        </div>
+        <div>
+          image
+          <input type="file" name="image" onChange={handleChangeOneImage} />
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
     </div>
   );
 };

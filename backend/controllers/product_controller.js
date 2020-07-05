@@ -1,24 +1,26 @@
 const Product = require("../models/Product");
 const createNewProduct = async (req, res, next) => {
   try {
-  const { type, name, price, sizes, colors, quantity } = req.body;
+    const { type, name, price, sizes, colors, quantity } = req.body;
 
-  let pro = {};
-  if (type) pro.type = type;
-  if (name) pro.name = name;
-  if (sizes) pro.sizes = sizes;
-  if (colors) pro.colors = colors;
-  if (quantity) pro.quantity = quantity;
-  if (price) pro.price = price;
-  if (req.file) pro.images = req.file.path;
 
-  const newProduct = new Product(pro);
+    console.log("file path:", req.files);
+    // console.log("image:", req.files.image);
+    // console.log("file path onae:", req.file);
 
-  if (req.file) {
-    console.log("file path:", req.file.path);
-  }
+    const newProduct = new Product({
+      type,
+      name,
+      price,
+      images: req.files.images,
+      sizes,
+      colors,
+      quantity,
+      image: req.files.image[0].path,
+    });
+    console.log("data to save", newProduct);
+    
 
-  
     await newProduct.save();
 
     res.json(newProduct);
@@ -29,7 +31,7 @@ const createNewProduct = async (req, res, next) => {
 const getAllProducts = async (req, res, next) => {
   try {
     let respond = await Product.find({});
-    console.log("log res", respond[0].images[0]);
+    console.log("log res", respond[0].images);
 
     res.json(respond);
   } catch (error) {
