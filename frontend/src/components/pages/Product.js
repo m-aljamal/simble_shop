@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import PageLinks from "../PageLinks";
@@ -10,8 +10,16 @@ const Product = ({ match: { params } }) => {
       loading,
     };
   });
-
   const { loading, product } = state;
+
+  const [displayImage, setDisplayImage] = useState("");
+
+  const handleImage = (image) => {
+    console.log(image);
+  };
+
+  console.log(product);
+  console.log(loading);
 
   return (
     <ProductStyle>
@@ -35,8 +43,10 @@ const Product = ({ match: { params } }) => {
           </div>
           <div className="images_container">
             <div className="images">
-              {product.images.map((image) => (
+              {product.images.map((image, index) => (
                 <img
+                  onClick={() => handleImage(image.path)}
+                  key={index}
                   src={`${process.env.REACT_APP_BACKEND_URL}/${image.path}`}
                   alt={product.name}
                 />
@@ -68,8 +78,10 @@ const ProductStyle = styled.div`
   .images_container {
     width: 50%;
     .images {
+      margin-top: 30px;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
       img {
         width: 100%;
       }

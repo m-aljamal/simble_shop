@@ -10,7 +10,7 @@ router.post(
   "/new",
 
   middleware.fileUpload.fields([
-    { name: "images", maxCount: 200 },
+    { name: "images", maxCount: 5000 },
     { name: "image", maxCount: 300 },
   ]),
   // middleware.fileUpload.array("images"),

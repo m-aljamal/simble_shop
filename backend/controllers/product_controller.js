@@ -3,7 +3,6 @@ const createNewProduct = async (req, res, next) => {
   try {
     const { type, name, price, sizes, colors, quantity } = req.body;
 
-
     console.log("file path:", req.files);
     // console.log("image:", req.files.image);
     // console.log("file path onae:", req.file);
@@ -19,7 +18,6 @@ const createNewProduct = async (req, res, next) => {
       image: req.files.image[0].path,
     });
     console.log("data to save", newProduct);
-    
 
     await newProduct.save();
 

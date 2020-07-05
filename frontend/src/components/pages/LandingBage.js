@@ -15,7 +15,9 @@ const LandingBage = () => {
         <div className="products">
           <h3>Featured Collection</h3>
           <div className="productsRows">
-            {state.loading && state.products ? (
+            { state.products.length === 0 ? (
+              <h2>No data found</h2>
+            ) : state.loading && state.products ? (
               <h2>Loading....</h2>
             ) : (
               state.products.map((pro) => (

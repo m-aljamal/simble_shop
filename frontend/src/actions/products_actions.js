@@ -5,7 +5,6 @@ export const getProducts = () => async (dispatch) => {
     const res = await axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/api/products`
     );
-    console.log("get data from server", res.data);
 
     dispatch({
       type: GET_PRODUCTS,
@@ -29,8 +28,7 @@ export const getProduct = (id) => async (dispatch) => {
   }
 };
 export const createProduct = (data) => async (dispatch) => {
-  console.log("data before save", data.image);
-  console.log("all data before save", data);
+
 
   try {
     const formData = new FormData();
@@ -41,7 +39,7 @@ export const createProduct = (data) => async (dispatch) => {
     formData.append("sizes", data.sizes);
     formData.append("type", data.type);
     formData.append("image", data.image);
-    // formData.append("images", data.images.fileList);
+
     for (const file of data.images) {
       formData.append("images", file);
     }
@@ -50,15 +48,13 @@ export const createProduct = (data) => async (dispatch) => {
       `${process.env.REACT_APP_BACKEND_URL}/api/products/new`,
       formData
     );
-    console.log("data after  save", res.data);
 
     dispatch({
       type: CREATE_PRODUCT,
       payload: res.data,
     });
   } catch (error) {
-    if(error){
-
+    if (error) {
       console.error(error.response.data);
     }
   }
