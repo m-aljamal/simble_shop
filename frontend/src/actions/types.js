@@ -8,3 +8,5 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCT = "GET_PRODUCT";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
+export const GET_PRODUCT_BY_TYPE = "GET_PRODUCT_BY_TYPE";
+export const CLEAR_PRODUCTS = "CLEAR_PRODUCTS";

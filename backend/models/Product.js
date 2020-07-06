@@ -21,6 +21,7 @@ const productSchema = mongoose.Schema({
   },
   sizes: [{ type: String, requier: true }],
   colors: [{ type: String, requier: true }],
+  discription: { type: String },
 });
 
 productSchema.set("toJSON", {

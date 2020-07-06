@@ -34,5 +34,13 @@ router.get(
 
   productController.getOneProduct
 );
+// @route   GET  /api/products/collections/:id
+// @desc    get products by type
+// @access  public
+router.get(
+  "/collections/:type",
+
+  productController.getProductsByType
+);
 
 module.exports = router;

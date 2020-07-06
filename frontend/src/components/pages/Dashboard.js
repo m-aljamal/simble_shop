@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createProduct } from "../../actions/products_actions";
 import { Select, InputNumber, Button, message, Form, Input } from "antd";
+const { TextArea } = Input;
+
 const { Option } = Select;
 
 const formLayout = {
@@ -22,6 +24,7 @@ const Dashboard = () => {
     images: [],
     sizes: "",
     image: "",
+    discription: "",
   });
 
   const dispatch = useDispatch();
@@ -38,6 +41,7 @@ const Dashboard = () => {
       images: [],
       sizes: "",
       image: "",
+      discription: "",
     });
   };
 
@@ -143,6 +147,7 @@ const Dashboard = () => {
             <Option value="green">Green</Option>
             <Option value="blue">Blue</Option>
             <Option value="blak">Black</Option>
+            <Option value="navy">Navy</Option>
           </Select>
         </Form.Item>
         <Form.Item
@@ -170,6 +175,7 @@ const Dashboard = () => {
             <Option value="small">small</Option>
             <Option value="midum">midum</Option>
             <Option value="large">large</Option>
+            <Option value="x-large">x-large</Option>
           </Select>
         </Form.Item>
         <Form.Item label="Select main image">
@@ -190,6 +196,14 @@ const Dashboard = () => {
               setFormData({ ...formData, images: e.target.files })
             }
             multiple
+          />
+        </Form.Item>
+        <Form.Item label="Product discription">
+          <TextArea
+            rows={6}
+            onChange={(e) =>
+              setFormData({ ...formData, discription: e.target.value })
+            }
           />
         </Form.Item>
 
