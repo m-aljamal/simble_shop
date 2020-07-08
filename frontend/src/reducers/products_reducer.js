@@ -1,7 +1,7 @@
 import {
   GET_PRODUCTS,
   GET_PRODUCT,
-  CREATE_PRODUCT,
+  // CREATE_PRODUCT,
   GET_PRODUCT_BY_TYPE,
   CLEAR_PRODUCTS,
 } from "../actions/types";
@@ -28,12 +28,12 @@ const product_reucer = (state = initialStat, action) => {
         loading: false,
         product: payload,
       };
-    case CREATE_PRODUCT:
-      return {
-        ...state,
-        loading: false,
-        products: [...state.products, payload],
-      };
+    // case CREATE_PRODUCT:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     products: [...state.products, payload],
+    //   };
     case GET_PRODUCT_BY_TYPE:
       return {
         ...state,

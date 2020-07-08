@@ -3,11 +3,11 @@ import {
   GET_PRODUCT,
   CREATE_PRODUCT,
   GET_PRODUCT_BY_TYPE,
-  CLEAR_PRODUCTS,
+  // CLEAR_PRODUCTS,
 } from "./types";
 import axios from "axios";
 export const getProducts = () => async (dispatch) => {
-  dispatch({ type: CLEAR_PRODUCTS });
+  // dispatch({ type: CLEAR_PRODUCTS });
 
   try {
     const res = await axios.get(
@@ -23,7 +23,7 @@ export const getProducts = () => async (dispatch) => {
   }
 };
 export const getProduct = (id) => async (dispatch) => {
-  dispatch({ type: CLEAR_PRODUCTS });
+  // dispatch({ type: CLEAR_PRODUCTS });
   try {
     const res = await axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/api/products/${id}`
@@ -37,7 +37,7 @@ export const getProduct = (id) => async (dispatch) => {
   }
 };
 export const getProductsByType = (type) => async (dispatch) => {
-  dispatch({ type: CLEAR_PRODUCTS });
+  // dispatch({ type: CLEAR_PRODUCTS });
   try {
     const res = await axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/api/products/collections/${type}`

@@ -17,6 +17,11 @@ const Layout = ({ children }) => {
 
       <ReactNotification />
       {children}
+      <div className="info">
+        <div className="footerLinks">Links</div>
+        <div className="subscribe">email</div>
+      </div>
+      <hr />
       <div>Footer</div>
     </div>
   );

@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-const ProductLanding = ({ product: { name, price, id, image } }) => {
-  console.log(name);
+const ProductsList = ({ product: { name, price, id, image } }) => {
   
   return (
     <ProductStyle>
@@ -15,7 +14,7 @@ const ProductLanding = ({ product: { name, price, id, image } }) => {
   );
 };
 
-export default ProductLanding;
+export default ProductsList;
 
 const ProductStyle = styled.div`
   text-align: center;

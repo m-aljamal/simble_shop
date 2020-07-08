@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import PageLinks from "../PageLinks";
 import { useSelector, useDispatch } from "react-redux";
-import { getProduct } from "../../actions/products_actions";
+
 import { Select, InputNumber, Button, message, Form, Input } from "antd";
 
 const formLayout = {
@@ -14,16 +14,8 @@ const formLayout = {
   },
 };
 const Product = ({ match: { params } }) => {
-  const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(getProduct(params.id));
-  // }, [params.id, dispatch]);
-
-  // const state = useSelector(({ product_reucer: { product, loading } }) => {
-  //   return { product, loading };
-  // });
-  // const { loading, product } = state;
+  
+  
   const { Option } = Select;
 
   const state = useSelector(({ product_reucer: { products, loading } }) => {
